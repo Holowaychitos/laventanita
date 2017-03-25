@@ -3,15 +3,81 @@
   <head>
     <meta charset="UTF-8">
     <title>Hello World!</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,500,700" rel="stylesheet">
+
+    <style>
+      body {
+        background: #ecf0f1;
+        color: #2c3e50;
+        font-family: 'Roboto Mono', monospace;
+      }
+
+      #app {
+        padding: 20px;
+      }
+
+      #app ol {
+        background: #fff;
+        padding: 10px 20px;
+      }
+
+      #app ol li {
+        text-decoration: none;
+        list-style: none;
+      }
+
+      .item {
+        display: flex;
+      }
+
+      .item-name {
+        flex: 1;
+      }
+
+      .item-price {
+        text-align: right;
+      }
+
+      #app ol p {
+        text-align: right;
+      }
+
+    </style>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
+    <div id="app">
+      <button v-on:click="reverseMessage">General compra</button>
+      <ol>
+        <li v-for="item in ticket">
+          <div class="item">
+            <div class="item-name">{{ item.name }}</div>
+            <div class="item-price">$ {{ item.price }}</div>
+          </div>
+        </li>
+
+        <div v-if="total == 0">
+          Agrega una compra
+        </div>
+        <p>$ {{total}}</p>
+      </ol>
+
+      <div v-if="total != 0">
+        <button v-on:click="print">Imprimir</button>
+      </div>
+
+    </div>
+
+
+    <!-- <h1>Hello World!</h1>
+     All of the Node.js APIs are available in this renderer process.
     We are using Node.js <script>document.write(process.versions.node)</script>,
     Chromium <script>document.write(process.versions.chrome)</script>,
     and Electron <script>document.write(process.versions.electron)</script>.
+    -->
   </body>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js" charset="utf-8"></script>
+  <script src="https://unpkg.com/vue"></script>
   <script>
     // You can also require other files to run in this process
     require('./renderer.js')
