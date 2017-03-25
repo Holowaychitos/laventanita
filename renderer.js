@@ -1,4 +1,4 @@
-/* global Vue, window, _ */
+/* global Vue, window, _  */
 
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
@@ -40,6 +40,7 @@ const App = new Vue({
 
     print () {
       // call socket
+      window.print()
     }
   },
   computed: {

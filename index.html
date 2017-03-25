@@ -42,12 +42,29 @@
         text-align: right;
       }
 
+      @media print {
+        button {
+          display: none;
+        }
+
+        body {
+          width: 58mm;
+          font: 10px;
+        }
+
+        .item-name {
+          display: block;
+        }
+      }
+
+
     </style>
   </head>
   <body>
     <div id="app">
       <button v-on:click="reverseMessage">General compra</button>
       <ol>
+        <h2>Doña Juanita</h2>
         <li v-for="item in ticket">
           <div class="item">
             <div class="item-name">{{ item.name }}</div>
