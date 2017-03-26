@@ -2,14 +2,15 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>EcoTicket!</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,500,700" rel="stylesheet">
 
     <style>
       body {
         background: #ecf0f1;
-        color: #2c3e50;
-        font-family: 'Roboto Mono', monospace;
+        color: #000;
+        margin:0;
+
       }
 
       #app {
@@ -24,6 +25,7 @@
       #app ol li {
         text-decoration: none;
         list-style: none;
+
       }
 
       .item {
@@ -38,8 +40,22 @@
         text-align: right;
       }
 
+      .logo-container{
+        display: none;
+        text-align: center;
+      }
+
+      .logo-container img{
+        width: 150px;
+      }
+
       #app ol p {
         text-align: right;
+      }
+
+      @page {
+        size: 58mm auto;
+        margin: 0;
       }
 
       @media print {
@@ -48,12 +64,27 @@
         }
 
         body {
-          width: 58mm;
-          font: 10px;
+          margin: 0 !important;
+          padding:0 !important;
+        }
+
+        #app{
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+
+        .shopTitle{
+          font: 28px;
+          font-family: fantasy;
         }
 
         .item-name {
           display: block;
+        }
+
+        .logo-container{
+          display: inline-block;
+          text-align: center;
         }
       }
 
@@ -64,7 +95,7 @@
     <div id="app">
       <button v-on:click="reverseMessage">General compra</button>
       <ol>
-        <h2>Doña Juanita</h2>
+        <h2 class="shopTitle">Doña Juanita</h2>
         <li v-for="item in ticket">
           <div class="item">
             <div class="item-name">{{ item.name }}</div>
@@ -80,6 +111,11 @@
 
       <div v-if="total != 0">
         <button v-on:click="print">Imprimir</button>
+      </div>
+
+      <div class="logo-container">
+        <img src="./images/logo.jpg" alt="">
+        <h3>Creado por EcoTicket, ten un bonito día.</h3>
       </div>
 
     </div>
