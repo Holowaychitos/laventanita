@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>EcoTicket!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,500,700" rel="stylesheet">
 
     <style>
@@ -89,10 +90,49 @@
       }
 
 
+      .popup {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background: rgba(0, 0, 0, 0.6);
+      }
+
+      .popup-box {
+          width: 480px;
+          padding: 20px;
+
+          background: #fff;
+          border-radius: 3px;
+          border-radius: 3px 3px 0px 0px;
+      }
+
+      .popup-box video {
+        width: 480px;
+        height: 320px;
+      }
+
     </style>
   </head>
   <body>
     <div id="app">
+
+      <div class="popup" v-if="popup">
+        <div class="popup-box animated bounceInDown">
+          <video id="preview" v-if="!resolve"></video>
+          <div class="resolve" v-if="resolve">
+            Ganaste
+          </div>
+        </div>
+      </div>
+
+
       <button v-on:click="reverseMessage">General compra</button>
       <ol>
         <h2 class="shopTitle">Doña Juanita</h2>
@@ -112,6 +152,7 @@
 
       <div v-if="total != 0">
         <button v-on:click="print">Imprimir</button>
+        <button v-on:click="scand">Scand</button>
       </div>
 
       <div class="logo-container">
@@ -134,6 +175,7 @@
   <script src="https://unpkg.com/vue"></script>
   <script>
     // You can also require other files to run in this process
+    require('./instascan.min.js')
     require('./renderer.js')
   </script>
 </html>

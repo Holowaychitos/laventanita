@@ -1,4 +1,4 @@
-/* global Vue, window, _  */
+/* global Vue, window, _, Instascan, fetch  */
 
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
@@ -31,9 +31,40 @@ const getRamdomList = () => {
 const App = new Vue({
   el: '#app',
   data: {
-    ticket: []
+    ticket: [],
+    popup: false,
+    resolve: false
   },
   methods: {
+    scand () {
+      let self = this
+      this.popup = true
+      let data = this.resume
+      _.delay(() => {
+        let cam = openCam((code) => {
+          console.log(code)
+          // fetch
+          fetch('http://ecoticket.mx/API/venta', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              user: 777,
+              shop: 222,
+              data: data
+            })
+          }).then((response) => {
+            self.resolve = true
+            cam.stop()
+            return response.text()
+          }).then(json => {
+            console.warn(self.resolve)
+          })
+          .catch(console.error)
+        })
+      }, 30)
+    },
     reverseMessage () {
       this.ticket = getRamdomList()
     },
@@ -45,7 +76,7 @@ const App = new Vue({
   },
   filters: {
     fixed (value) {
-      if (!value) return ''
+      if (!value) return '0.00'
       return value.toFixed(2).toLocaleString()
     }
   },
@@ -79,18 +110,24 @@ const App = new Vue({
   }
 })
 
-// let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-//       scanner.addListener('scan', function (content) {
-//         console.log(content)
-//       });
-//       Instascan.Camera.getCameras().then(function (cameras) {
-//         if (cameras.length > 0) {
-//           scanner.start(cameras[0])
-//         } else {
-//           console.error('No cameras found.')
-//         }
-//       }).catch(function (e) {
-//         console.error(e)
-//       })
-//
+function openCam (callback) {
+  let scanner = new Instascan.Scanner({ video: document.getElementById('preview') })
+
+  scanner.addListener('scan', function (content) {
+    callback(content)
+  })
+
+  Instascan.Camera.getCameras().then(function (cameras) {
+    if (cameras.length > 0) {
+      scanner.start(cameras[0])
+    } else {
+      console.error('No cameras found.')
+    }
+  }).catch(function (e) {
+    console.error(e)
+  })
+
+  return scanner
+}
+
 // scanner.stop()
