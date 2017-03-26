@@ -43,7 +43,33 @@ const App = new Vue({
       window.print()
     }
   },
+  filters: {
+    fixed (value) {
+      if (!value) return ''
+      return value.toFixed(2).toLocaleString()
+    }
+  },
   computed: {
+    resume () {
+      let resume = this.ticket.reduce((list, element) => {
+        if (element.name in list) {
+          list[element.name].count = list[element.name].count + 1
+        } else {
+          list[element.name] = {}
+          list[element.name].price = element.price
+          list[element.name].count = 1
+        }
+
+        return list
+      }, {})
+
+      let resumeArray = _.reduce(resume, (array, val, key) => {
+        array.push({name: key, price: val.price, count: val.count})
+        return array
+      }, [])
+
+      return resumeArray
+    },
     total () {
       let sum = this.ticket.reduce((sum, element) => {
         return sum + element.price
@@ -52,3 +78,19 @@ const App = new Vue({
     }
   }
 })
+
+// let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+//       scanner.addListener('scan', function (content) {
+//         console.log(content)
+//       });
+//       Instascan.Camera.getCameras().then(function (cameras) {
+//         if (cameras.length > 0) {
+//           scanner.start(cameras[0])
+//         } else {
+//           console.error('No cameras found.')
+//         }
+//       }).catch(function (e) {
+//         console.error(e)
+//       })
+//
+// scanner.stop()
