@@ -96,10 +96,11 @@
       <button v-on:click="reverseMessage">General compra</button>
       <ol>
         <h2 class="shopTitle">Doña Juanita</h2>
-        <li v-for="item in ticket">
+        <li v-for="item in resume">
           <div class="item">
             <div class="item-name">{{ item.name }}</div>
-            <div class="item-price">$ {{ item.price }}</div>
+            <div class="item-count">x{{ item.count }}</div>
+            <div class="item-price">$ {{ item.count * item.price | fixed }}</div>
           </div>
         </li>
 
