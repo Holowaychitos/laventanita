@@ -8,8 +8,9 @@
     <style>
       body {
         background: #ecf0f1;
-        color: #2c3e50;
-        font-family: 'Roboto Mono', monospace;
+        color: #000;
+        margin:0;
+
       }
 
       #app {
@@ -24,6 +25,7 @@
       #app ol li {
         text-decoration: none;
         list-style: none;
+
       }
 
       .item {
@@ -42,14 +44,29 @@
         text-align: right;
       }
 
+      @page {
+        size: 58mm auto;
+        margin: 0;
+      }
+
       @media print {
         button {
           display: none;
         }
 
         body {
-          width: 58mm;
-          font: 10px;
+          margin: 0 !important;
+          padding:0 !important;
+        }
+
+        #app{
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+
+        .shopTitle{
+          font: 28px;
+          font-family: fantasy;
         }
 
         .item-name {
@@ -64,7 +81,7 @@
     <div id="app">
       <button v-on:click="reverseMessage">General compra</button>
       <ol>
-        <h2>Doña Juanita</h2>
+        <h2 class="shopTitle">Doña Juanita</h2>
         <li v-for="item in ticket">
           <div class="item">
             <div class="item-name">{{ item.name }}</div>
