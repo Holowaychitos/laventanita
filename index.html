@@ -145,6 +145,8 @@
           <video id="preview" v-if="!resolve"></video>
           <div class="resolve" v-if="resolve">
             Ganaste
+
+            <div class="close" v-on:click="closeDialog">cerrar</div>
           </div>
         </div>
       </div>

@@ -36,6 +36,9 @@ const App = new Vue({
     resolve: false
   },
   methods: {
+    closeDialog () {
+      this.popup = false
+    },
     scand () {
       let self = this
       this.popup = true
@@ -59,7 +62,7 @@ const App = new Vue({
             cam.stop()
             return response.text()
           }).then(json => {
-            console.warn(self.resolve)
+            console.warn(json)
           })
           .catch(console.error)
         })
