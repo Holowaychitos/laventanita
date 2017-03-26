@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>EcoTicket!</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,500,700" rel="stylesheet">
 
     <style>
@@ -40,6 +40,15 @@
         text-align: right;
       }
 
+      .logo-container{
+        display: none;
+        text-align: center;
+      }
+
+      .logo-container img{
+        width: 150px;
+      }
+
       #app ol p {
         text-align: right;
       }
@@ -72,6 +81,11 @@
         .item-name {
           display: block;
         }
+
+        .logo-container{
+          display: inline-block;
+          text-align: center;
+        }
       }
 
 
@@ -97,6 +111,11 @@
 
       <div v-if="total != 0">
         <button v-on:click="print">Imprimir</button>
+      </div>
+
+      <div class="logo-container">
+        <img src="./images/logo.jpg" alt="">
+        <h3>Creado por EcoTicket, ten un bonito día.</h3>
       </div>
 
     </div>
