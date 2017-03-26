@@ -20,6 +20,7 @@
       #app ol {
         background: #fff;
         padding: 10px 20px;
+        width: 58mm;
       }
 
       #app ol li {
@@ -30,6 +31,9 @@
 
       .item {
         display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 1em 0;
       }
 
       .item-name {
@@ -38,6 +42,16 @@
 
       .item-price {
         text-align: right;
+      }
+
+      .total-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .total-container .total-item{
+        font-weight: bold;
       }
 
       .logo-container{
@@ -86,6 +100,9 @@
           display: inline-block;
           text-align: center;
         }
+        .logo-container h3{
+          padding: 0 1em;
+        }
       }
 
 
@@ -98,16 +115,18 @@
         <h2 class="shopTitle">Doña Juanita</h2>
         <li v-for="item in resume">
           <div class="item">
-            <div class="item-name">{{ item.name }}</div>
-            <div class="item-count">x{{ item.count }}</div>
-            <div class="item-price">$ {{ item.count * item.price | fixed }}</div>
+            <div class="item-name">{{ item.count }} {{ item.name }}</div>
+            <div class="item-price">${{ item.count * item.price | fixed }}</div>
           </div>
         </li>
 
         <div v-if="total == 0">
           Agrega una compra
         </div>
-        <p>$ {{total}}</p>
+        <div v-if="total > 0" class="total-container">
+          <div class="total-item">TOTAL:</div>
+          <div class="total-item">${{total}}</div>
+        </div>
       </ol>
 
       <div v-if="total != 0">
