@@ -32,11 +32,18 @@ const App = new Vue({
   el: '#app',
   data: {
     ticket: [],
+    clientId: '',
     popup: false,
-    resolve: false
+    resolve: false,
+    loading: false,
+    error: false
   },
   methods: {
     closeDialog () {
+      this.popup = false
+      this.ticket = []
+    },
+    closeAndTryAgain(){
       this.popup = false
     },
     scand () {
@@ -45,26 +52,38 @@ const App = new Vue({
       let data = this.resume
       _.delay(() => {
         let cam = openCam((code) => {
-          console.log(code)
+          self.loading = true
           // fetch
           fetch('http://ecoticket.mx/API/venta', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'text/plain;charset=UTF-8'
             },
             body: JSON.stringify({
-              user: 777,
+              user: code,
               shop: 222,
               data: data
             })
           }).then((response) => {
-            self.resolve = true
-            cam.stop()
-            return response.text()
+            if(response.status === 200){
+              self.resolve = true
+              self.loading = false
+              self.error = false
+              cam.stop()
+              return response.text()
+            } else {
+              cam.stop()
+              self.error = true
+              self.resolve = false
+              self.loading = false
+            }
+
           }).then(json => {
             console.warn(json)
           })
-          .catch(console.error)
+          .catch(function(err){
+            console.error()
+          })
         })
       }, 30)
     },

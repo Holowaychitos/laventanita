@@ -64,6 +64,14 @@
         width: 150px;
       }
 
+      .done{
+        margin: 0;
+      }
+
+      .ticket-resume, .ticket-resume h2{
+        margin: 0;
+      }
+
       #app ol p {
         text-align: right;
       }
@@ -106,7 +114,6 @@
         }
       }
 
-
       .popup {
         position: fixed;
         left: 0;
@@ -143,14 +150,35 @@
       <div class="popup" v-if="popup">
         <div class="popup-box animated bounceInDown">
           <video id="preview" v-if="!resolve"></video>
-          <div class="resolve" v-if="resolve">
-            Ganaste
+          <div v-if="loading && !resolve">Cargando...</div>
+          <div v-if="error && !resolve">
+            <h4>Se ha producido un error :(</h4>
+            <button class="close" v-on:click="closeAndTryAgain">Cerrar</button>
+          </div>
+          <div class="resolve" v-if="resolve && !loading && !error">
+            <h3 class="done">Se ha generado la venta con los siguientes datos:</h3>
+            <ol class="ticket-resume">
+              <h2 class="shopTitle">Doña Juanita</h2>
+              <li v-for="item in resume">
+                <div class="item">
+                  <div class="item-name">{{ item.count }} {{ item.name }}</div>
+                  <div class="item-price">${{ item.count * item.price | fixed }}</div>
+                </div>
+              </li>
 
-            <div class="close" v-on:click="closeDialog">cerrar</div>
+              <div v-if="total == 0">
+                Agrega una compra
+              </div>
+              <div v-if="total > 0" class="total-container">
+                <div class="total-item">TOTAL:</div>
+                <div class="total-item">${{total}}</div>
+              </div>
+            </ol>
+            <h3 class="done">Atentamente: Doña Juanita</h3>
+            <button class="close" v-on:click="closeDialog">Cerrar</button>
           </div>
         </div>
       </div>
-
 
       <button v-on:click="reverseMessage">General compra</button>
       <ol>
@@ -161,7 +189,6 @@
             <div class="item-price">${{ item.count * item.price | fixed }}</div>
           </div>
         </li>
-
         <div v-if="total == 0">
           Agrega una compra
         </div>
