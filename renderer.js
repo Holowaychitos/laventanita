@@ -32,7 +32,6 @@ const App = new Vue({
   el: '#app',
   data: {
     ticket: [],
-    clientId: '',
     popup: false,
     resolve: false,
     loading: false,
@@ -49,6 +48,7 @@ const App = new Vue({
     scand () {
       let self = this
       this.popup = true
+      this.error = false
       let data = this.resume
       _.delay(() => {
         let cam = openCam((code) => {
